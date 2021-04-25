@@ -14,6 +14,7 @@
 <script>
   import firebase from 'firebase/app'
   import 'firebase/auth'
+  import http from '@/http'
   
   export default {
     name: "Login",
@@ -31,10 +32,9 @@
           .auth()
           .signInWithPopup(provider)
           .then((result) => {
-            let token = result.credential.accessToken;
-            let user = result.user;
-            console.log(token) // Token
-            console.log(user) // User that was authenticated
+            http.post('/users/login', result.user).then((res) => {
+              console.log(res)
+            })
 
             this.$router.replace('home')
           })

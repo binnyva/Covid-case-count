@@ -2,34 +2,50 @@ import { createStore } from 'vuex'
 
 const store = createStore({
   state: {
-    user: {
-      loggedIn: false,
-      data: null
-    }
+    loggedIn: false,
+    user: null,
+    subscriptions: []
   },
+
   getters: {
+    loggedIn(state) {
+      return state.loggedIn
+    },
     user(state){
       return state.user
+    },
+    subscriptions(state) {
+      return state.subscriptions
     }
   },
+
   mutations: {
     SET_LOGGED_IN(state, value) {
-      state.user.loggedIn = value;
+      state.loggedIn = value;
     },
     SET_USER(state, data) {
-      state.user.data = data;
+      state.user = data;
+    },
+    SET_SUBSCRIPTIONS(state, subs) {
+      state.subscriptions = subs
     }
   },
+
   actions: {
     fetchUser({ commit }, user) {
       commit("SET_LOGGED_IN", user !== null);
       if (user) {
         commit("SET_USER", {
           displayName: user.displayName,
-          email: user.email
+          email: user.email,
+          uid: user.uid,
+          user_id: user.user_id
         });
+
+        commit("SET_SUBSCRIPTIONS", user.subscriptions)
       } else {
         commit("SET_USER", null);
+        commit("SET_SUBSCRIPTIONS", [])
       }
     }
   }

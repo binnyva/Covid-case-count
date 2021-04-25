@@ -686,4 +686,3 @@ const districts = [
 ]
 
 export const all_locations = districts.concat(Object.values(states_codes_names))
-

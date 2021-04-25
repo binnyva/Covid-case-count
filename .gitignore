@@ -1,3 +1,6 @@
+covid-case-count-broken
+Info
+
 .DS_Store
 node_modules
 dist
@@ -6,6 +9,8 @@ vendor
 # local env files
 .env.local
 .env.*.local
+configuration.php
+secret.js
 
 # Log files
 npm-debug.log*

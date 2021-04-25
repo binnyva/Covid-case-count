@@ -24,7 +24,7 @@ class User extends DBTable {
 	// $u_id means it can be either $user_id or $uid.
 	public function getByAny($u_id) {
 		if(!is_numeric($u_id)) {
-			$user = $this->sql->getAssoc("SELECT * FROM User WHERE uid=$u_id");
+			$user = $this->sql->getAssoc("SELECT * FROM User WHERE uid='$u_id'");
 		} else {
 			$user = $this->sql->getAssoc("SELECT * FROM User WHERE id=$u_id");
 		}
@@ -39,7 +39,7 @@ class User extends DBTable {
 
 	public function login($data) {
 		if(isset($data['uid'])) {
-			$user = $this->sql->getAssoc("SELECT * FROM User WHERE uid={$data['uid']}");
+			$user = $this->getByAny($data['uid']);
 
 			if(!$user) { // First Login. Register the user.
 				$user['id'] = $this->register($data);
