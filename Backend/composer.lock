@@ -1,0 +1,71 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "06625b6b72f4592296d470918adffee2",
+    "packages": [
+        {
+            "name": "binnyva/iframe",
+            "version": "2.0.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/binnyva/iframe.git",
+                "reference": "8f326969889b78451edbf5afd78754a6b0eeaadd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/binnyva/iframe/zipball/8f326969889b78451edbf5afd78754a6b0eeaadd",
+                "reference": "8f326969889b78451edbf5afd78754a6b0eeaadd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "iframe\\": "src/classes"
+                },
+                "files": [
+                    "src/helpers/shortcuts.php",
+                    "src/helpers/misc.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Binny V A",
+                    "email": "binnyva@gmail.com",
+                    "homepage": "http://binnyva.com/",
+                    "role": "Developer"
+                }
+            ],
+            "description": "iFrame is a PHP micro framework",
+            "keywords": [
+                "framework",
+                "microframework",
+                "mvc",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/binnyva/iframe/issues",
+                "source": "https://github.com/binnyva/iframe/tree/v2.0.6"
+            },
+            "time": "2021-02-10T09:53:58+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
+}

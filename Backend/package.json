@@ -1,0 +1,17 @@
+{
+  "name": "iframe-skeleton",
+  "version": "1.0.0",
+  "description": "iFrame is a PHP Micro Framework. This is a skeleton project using that framework.",
+  "main": "index.php",
+  "dependencies": {
+    "bootstrap": "^4.4.1"
+  },
+  "keywords": [
+    "php",
+    "microframework",
+    "framework",
+    "mvc"
+  ],
+  "author": "Binny V A",
+  "license": "MIT"
+}
