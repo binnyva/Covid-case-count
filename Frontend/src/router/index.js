@@ -5,6 +5,7 @@ import 'firebase/auth'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
+import Subscriptions from "../views/Subscriptions.vue"
 
 const routes = [
   {
@@ -16,6 +17,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/subscriptions',
+    name: 'Subscriptions',
+    component: Subscriptions,
     meta: {
       requiresAuth: true
     }

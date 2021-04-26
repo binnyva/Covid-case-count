@@ -61,4 +61,25 @@ class User extends DBTable {
 		]);
 	}
 
+	public function addDevice($u_id, $token) {
+		list($user_id, $uid) = $this->getBothIds($u_id);
+
+		$existing_device = $this->deviceExists($user_id, $token);
+		if(!$existing_device) {
+			return $this->sql->insert("Device", [
+				'user_id'	=> $user_id,
+				'token'		=> $token,
+				'added_on'	=> 'NOW()',
+				'updated_on'=> 'NOW()',
+				'status'	=> '1',
+			]);
+		} else {
+			return $existing_device;
+		}
+	}
+
+	public function deviceExists($user_id, $token) {
+		return $this->sql->getOne("SELECT id FROM Device WHERE user_id=$user_id AND token='$token'");
+	}
+
 }

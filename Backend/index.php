@@ -51,6 +51,17 @@ $route->post('/users/{user_id}/subscriptions', function($user_id) {
 
     echo JSEND::success($subs);
 });
+
+$route->post('/users/{user_id}/devices', function($user_id) {
+    global $user_model, $QUERY;
+    $token = $QUERY['token'];
+
+    if($user_model->addDevice($user_id, $token)) {
+        echo JSEND::success(['token' => $token]);
+    } else {
+        echo JSEND::error("Couldn't add new device to user ID: $user_id");
+    }
+});
 $route->handle();
 
 /*

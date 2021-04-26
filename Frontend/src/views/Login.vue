@@ -1,13 +1,13 @@
 <template>
   <div>
+    <!--
     <input type="email" name="email" v-model="email" placeholder="Email" class="form-control" /><br />
     <input type="password" name="password" v-model="password" class="form-control" /><br />
     <input type="submit" name="action" class="btn btn-primary" value="Login" />
 
-    <p>
-      OR<br />
-      <input type="button" class="btn btn-primary" name="google-signin" value="Sign in with Google" @click="googleSignIn" /><br />
-    </p>
+    <p>OR</p>
+    -->
+    <input type="button" class="btn btn-primary" name="google-signin" value="Sign in with Google" @click="googleSignIn" /><br />
   </div>
 </template>
 
@@ -20,8 +20,8 @@
     name: "Login",
     data() {
       return {
-        email: "",
-        password: "",
+        // email: "",
+        // password: "",
       }
     },
     methods: {

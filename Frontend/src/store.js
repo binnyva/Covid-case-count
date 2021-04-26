@@ -47,6 +47,12 @@ const store = createStore({
         commit("SET_USER", null);
         commit("SET_SUBSCRIPTIONS", [])
       }
+    },
+
+    setSubscriptions({ commit }, subs) {
+      commit("SET_SUBSCRIPTIONS", {
+        subscriptions: subs
+      })
     }
   }
 });
