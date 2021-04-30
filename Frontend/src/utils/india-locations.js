@@ -17,6 +17,7 @@ const states_codes_names = {
   "JH":"Jharkhand",
   "KA":"Karnataka",
   "KL":"Kerala",
+  "LA":"Ladakh",
   "LD":"Lakshadweep",
   "MP":"Madhya Pradesh",
   "MH":"Maharashtra",
@@ -32,6 +33,7 @@ const states_codes_names = {
   "TN":"Tamil Nadu",
   "TG":"Telangana",
   "TR":"Tripura",
+  "TT":"India",
   "UP":"Uttar Pradesh",
   "UT":"Uttarakhand",
   "WB":"West Bengal"

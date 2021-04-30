@@ -4,6 +4,7 @@ require 'common.php';
 $route = new iframe\Route;
 $user_model = new User;
 $subscription_model = new Subscription;
+$data_model = new Data;
 $jsend = new JSend;
 
 header("Content-type: application/json");
@@ -61,6 +62,13 @@ $route->post('/users/{user_id}/devices', function($user_id) {
     } else {
         echo JSEND::error("Couldn't add new device to user ID: $user_id");
     }
+});
+
+$route->get('/cron', function() {
+    global $data_model;
+
+    $updated_count = $data_model->saveLatestData();
+    echo JSEND::success(['data' => "Updated $updated_count locations."]);
 });
 $route->handle();
 
