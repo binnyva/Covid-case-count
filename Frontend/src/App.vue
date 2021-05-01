@@ -1,5 +1,5 @@
 <template>
-  <div id="nav">
+  <div id="nav" v-if="loggedIn">
     <router-link to="/">Home</router-link> |
     <router-link to="/settings">Settings</router-link> | 
     <router-link to="/about">About</router-link>
@@ -8,6 +8,18 @@
     <router-view/>
   </div>
 </template>
+
+
+<script>
+export default {
+  name: 'App',
+  data() {
+    return {
+      loggedIn: this.$store.getters.loggedIn,
+    }
+  },
+}
+</script>
 
 <style lang="scss">
 #app {

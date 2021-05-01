@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import firebase from 'firebase/app'
-import 'firebase/auth'
+// import firebase from 'firebase/app'
+// import 'firebase/auth'
+import store from "../store"
 
 import Home from '../views/Home.vue'
 import Settings from '../views/Settings.vue'
@@ -54,7 +55,7 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    // component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   }
 ]
 
@@ -63,12 +64,12 @@ const router = createRouter({
   routes
 })
 
-
 router.beforeEach((to, from, next) => {
-  const currentUser = firebase.auth().currentUser;
+  // const currentUser = firebase.auth().currentUser;
+  const loggedIn = store.getters.loggedIn
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login');
+  if (requiresAuth && !loggedIn) next('login');
   else next();
 });
 

@@ -1,6 +1,5 @@
 import { createStore } from 'vuex'
-
-// We'll have to make this persist accross reloads - https://stackoverflow.com/questions/43027499/vuex-state-on-page-refresh
+import createPersistedState from "vuex-persistedstate";
 
 const store = createStore({
   state: {
@@ -9,6 +8,7 @@ const store = createStore({
     subscriptions: [],
     locations: []
   },
+  plugins: [createPersistedState()],
 
   getters: {
     loggedIn(state) {
@@ -73,15 +73,11 @@ const store = createStore({
     },
 
     setSubscriptions({ commit }, subs) {
-      commit("SET_SUBSCRIPTIONS", {
-        subscriptions: subs
-      })
+      commit("SET_SUBSCRIPTIONS", subs )
     },
 
     setLocations({ commit }, locs) {
-      commit("SET_LOCATIONS", {
-        locations: locs
-      })
+      commit("SET_LOCATIONS", locs)
     }
   }
 });

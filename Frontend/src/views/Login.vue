@@ -18,12 +18,6 @@
   
   export default {
     name: "Login",
-    data() {
-      return {
-        // email: "",
-        // password: "",
-      }
-    },
     methods: {
       // Code taken from https://blog.logrocket.com/vue-firebase-authentication/
       googleSignIn: function() {

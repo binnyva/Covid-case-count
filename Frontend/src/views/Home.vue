@@ -38,10 +38,8 @@
 export default {
   name: 'Home',
   data() {
-    const locations = this.$store.getters.locations
-    // console.log(locations)
     return {
-      locations: locations
+      locations: this.$store.getters.locations,
     }
   },
 

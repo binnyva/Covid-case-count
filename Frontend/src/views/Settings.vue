@@ -1,26 +1,36 @@
 <template>
   <div class="settings">
     <div class="container" id="locations" v-if="step === 1">
-      <h4>Step 1: Locations of Interest</h4>
+      <h4>Locations of Interest</h4>
 
       <p>Enter the locations you want the Covid data of...</p>
-      <ul v-if="locations.length > 0">
-        <li v-for="(loc, index) in locations" :key="index">{{ loc }}</li>
+      <ul v-if="subscriptions.length > 0">
+        <draggable :list="subscriptions" item-key="index" group="subscriptions" @start="drag=true" @end="drag=false">
+          <template #item="{ loc, index }">
+            <li>
+              {{ subscriptions[index] }}
+              <span class="delete-subscription" @click="deleteSubscription(subscriptions[index])">x {{ loc }}</span>
+            </li>
+          </template>
+        </draggable>
       </ul>
 
       <form action="" method="post" @submit="addLocation">
-        <input type="text" placeholder="Location" list="all-locations" v-model="new_location" />
+        <input type="text" placeholder="Location" list="all-locations" v-model="new_subscription" />
         <datalist id="all-locations">
           <option v-for="(loc,index) in all_locations" :key="index" :value="loc" />
+          <!-- Shortcuts -->
+          <option value="Bengaluru Urban">Bangalore</option>
         </datalist>
         <input type="submit" value="Add" class="btn-sm btn-primary" /><br />
       </form>
 
-      <input v-if="locations.length > 0" type="button" class="btn btn-success" value="Save and Move to Step 2 &gt;" @click="saveSubscriptions" />
+      <input v-if="app_init && subscriptions.length > 0" type="button" class="btn btn-success" value="Save Subscriptions" @click="saveSubscriptions" />
+      <input v-if="!app_init && subscriptions.length > 0" type="button" class="btn btn-success" value="Save and Move to Next Step &gt;" @click="saveSubscriptions" />
     </div>
 
     <div class="container" id="settings" v-if="step === 2">
-      <h4>Step 2: Notification Settings</h4>
+      <h4>Notification Settings</h4>
       <label for="time">Notification Time:</label> <input type="time" id="time" name="time" v-model="time" /><br />
 
       <strong>Send Data from:</strong><br />
@@ -48,7 +58,7 @@
     </div>
 
     <div class="container" id="permissions" v-if="step === 3">
-      <h4>Step 3: Permissions</h4>
+      <h4>Permissions</h4>
 
       <p>You have to autherize this app to be able to send you notifications.</p>
       
@@ -74,7 +84,7 @@
     <div class="container" id="done" v-if="step === 4">
       <h4>Step 4: All Done</h4>
 
-      <p>You are done setting up the app. Now you'll get a notification every day at the time you choose({{ this.time }}).</p>
+      <p>You are done setting up the app. Now you'll get a notification every day at the time {{ this.time }}.</p>
     </div>
     <!-- :TODO:
     Show Sample notification display that changes when people make changes to the settings
@@ -86,9 +96,13 @@
 import { all_locations } from '@/utils/india-locations'
 import { requestPermission } from '@/firebase'
 import http from '@/http'
+import draggable from 'vuedraggable'
 
 export default {
   name: 'Home',
+  components: {
+    draggable
+  },
   data() {
     // Browser Detection - needed to tell the user how to add the app to phone.
     let browser = 'other'
@@ -99,19 +113,20 @@ export default {
     )
     browser = 'chrome'
 
+    const current_subscriptions = this.$store.getters.subscriptions
+
     return {
+      app_init: current_subscriptions.length > 0,
       error_text: "",
       step: 1,
       data_changed_subs: false,
       data_changed_settings: true,
 
       browser: browser,
-      new_location: "",
+      new_subscription: "",
       all_locations: all_locations,
-      locations: [
-        "Karnataka",
-        "Bangalore",
-      ],
+      subscriptions: current_subscriptions,
+
       time: "10:00:00",
       data_date: "yesterday",
 
@@ -132,12 +147,16 @@ export default {
   methods: {
     addLocation(e) {
       e.preventDefault()
-      this.locations.push(this.new_location)
-      this.new_location = ""
+      this.subscriptions.push(this.new_subscription)
+      this.new_subscription = ""
       this.data_changed_subs = true
     },
 
-    removeLocation() { // :TODO:
+    deleteSubscription(sub) {
+      const index = this.subscriptions.indexOf(sub);
+      if (index > -1) {
+        this.subscriptions.splice(index, 1);
+      }
       this.data_changed_subs = true
     },
 
@@ -147,14 +166,20 @@ export default {
 
     async saveSubscriptions() {
       const response = await http.post(`/users/${this.$store.state.user.uid}/subscriptions`, {
-        subscriptions: this.locations
+        subscriptions: this.subscriptions
       })
 
       if(response.data.status == "success") {
-        this.$store.dispatch("setSubscriptions", this.locations)
+        this.$store.dispatch("setSubscriptions", this.subscriptions)
+        this.$store.dispatch("setLocations", response.data.data)
         this.data_changed_subs = false
       }
-      this.step = 2
+
+      if(!this.app_init) {
+        this.step = 2
+      } else {
+        this.$router.replace('home')
+      }
     },
 
     async saveSettings() {
@@ -164,7 +189,7 @@ export default {
     async notificationPermission() {
       const success = await requestPermission()
       if(success) {
-        this.$router.replace('subscriptions')
+        this.$router.replace('home')
       } else {
         this.error_text = "Failed getting notification permission. Did you click on the Allow button?";
       }
@@ -176,5 +201,9 @@ export default {
 <style scoped>
 .delta-text, .info {
   font-size: .7em;
+}
+.delete-subscription {
+  font-size: smaller;
+  color: red;
 }
 </style>
