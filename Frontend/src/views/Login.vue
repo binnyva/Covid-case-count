@@ -33,7 +33,7 @@
           .signInWithPopup(provider)
           .then((result) => {
             http.post('/users/login', result.user).then((res) => {
-              console.log(res)
+              this.$store.dispatch("setUser", res.data.data)
             })
 
             this.$router.replace('home')

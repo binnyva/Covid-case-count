@@ -1,10 +1,13 @@
 import { createStore } from 'vuex'
 
+// We'll have to make this persist accross reloads - https://stackoverflow.com/questions/43027499/vuex-state-on-page-refresh
+
 const store = createStore({
   state: {
     loggedIn: false,
     user: null,
-    subscriptions: []
+    subscriptions: [],
+    locations: []
   },
 
   getters: {
@@ -16,6 +19,9 @@ const store = createStore({
     },
     subscriptions(state) {
       return state.subscriptions
+    },
+    locations(state) {
+      return state.locations
     }
   },
 
@@ -28,6 +34,9 @@ const store = createStore({
     },
     SET_SUBSCRIPTIONS(state, subs) {
       state.subscriptions = subs
+    },
+    SET_LOCATIONS(state, locs) {
+      state.locations = locs
     }
   },
 
@@ -42,16 +51,36 @@ const store = createStore({
           user_id: user.user_id
         });
 
-        commit("SET_SUBSCRIPTIONS", user.subscriptions)
+        if(user.subscriptions) commit("SET_SUBSCRIPTIONS", user.subscriptions)
+        if(user.locations) commit("SET_LOCATIONS", user.locations)
       } else {
         commit("SET_USER", null);
         commit("SET_SUBSCRIPTIONS", [])
+        commit("SET_LOCATIONS", [])
       }
+    },
+
+    setUser({ commit }, user) {
+      commit("SET_USER", {
+        displayName: user.displayName,
+        email: user.email,
+        uid: user.uid,
+        user_id: user.user_id
+      });
+
+      commit("SET_SUBSCRIPTIONS", user.subscriptions)
+      commit("SET_LOCATIONS", user.locations)
     },
 
     setSubscriptions({ commit }, subs) {
       commit("SET_SUBSCRIPTIONS", {
         subscriptions: subs
+      })
+    },
+
+    setLocations({ commit }, locs) {
+      commit("SET_LOCATIONS", {
+        locations: locs
       })
     }
   }

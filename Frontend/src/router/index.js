@@ -3,6 +3,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 
 import Home from '../views/Home.vue'
+import Settings from '../views/Settings.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Subscriptions from "../views/Subscriptions.vue"
@@ -17,6 +18,14 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings,
     meta: {
       requiresAuth: true
     }
