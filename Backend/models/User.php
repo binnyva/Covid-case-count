@@ -10,12 +10,17 @@ class User extends DBTable {
 		parent::__construct("User");
 	}
 
-	public function fetch($user_id, $fetch_subscriptions = true) {
+	public function fetch($user_id, $fetch_subscriptions = true, $fetch_data = true) {
 		$user = $this->getByAny($user_id);
 
 		if($fetch_subscriptions) {
 			$subscription_model = new Subscription;
 			$user['subscriptions'] = $subscription_model->getByUser($user['id']);
+		}
+
+		if($fetch_data) {
+			$location_model = new Location;
+			$user['locations'] = $location_model->getByUser($user['id']);
 		}
 
 		return $user;
@@ -47,8 +52,10 @@ class User extends DBTable {
 				$this->sql->update("User", ['last_logged_on'=>'NOW()'], ['uid' => $data['uid']]);
 			}
 
-			return $user['id'];
+			return $this->fetch($user['id']);
 		}
+
+		return false;
 	}
 
 	public function register($data) {

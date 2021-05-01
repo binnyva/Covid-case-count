@@ -21,29 +21,19 @@ class JSend
     public static function situation($status, $message, $data, $response_code = 200)
     {
         $template = array(
-            'success'	=> true,
-            'error'		=> false,
             'status'	=> 'success',
             'data'		=> null
         );
 
         if ($status == 'error') {
-            $template['error'] = true;
-            $template['success'] = false;
-            $template['fail'] = false;
-
             $template['message'] = $message;
         } elseif ($status == 'fail') {
-            $template['error'] = true;
-            $template['success'] = false;
-            $template['fail'] = true;
-
             $template['data'] = array($message);
         }
 
         $template['status'] = $status;
 
-        if (is_string($message)) {
+        if (is_string($message) and $message) {
             $template[$status] = $message;
         } elseif (is_array($message)) {
             $template = array_merge($template, $message);

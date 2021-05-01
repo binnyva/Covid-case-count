@@ -4,46 +4,6 @@ use iframe\DB\DBTable;
 class Data extends DBTable {
 	private $sql;
     private $data_api_url = "https://api.covid19india.org/v4/min/data.min.json";
-    public $state_codes_names = [
-        "AN" => "Andaman and Nicobar Islands",
-        "AP" => "Andhra Pradesh",
-        "AR" => "Arunachal Pradesh",
-        "AS" => "Assam",
-        "BR" => "Bihar",
-        "CH" => "Chandigarh",
-        "CT" => "Chhattisgarh",
-        "DN" => "Dadra and Nagar Haveli",
-        "DD" => "Daman and Diu",
-        "DL" => "Delhi",
-        "GA" => "Goa",
-        "GJ" => "Gujarat",
-        "HR" => "Haryana",
-        "HP" => "Himachal Pradesh",
-        "JK" => "Jammu and Kashmir",
-        "JH" => "Jharkhand",
-        "KA" => "Karnataka",
-        "KL" => "Kerala",
-        "LA" => "Ladakh",
-        "LD" => "Lakshadweep",
-        "MP" => "Madhya Pradesh",
-        "MH" => "Maharashtra",
-        "MN" => "Manipur",
-        "ML" => "Meghalaya",
-        "MZ" => "Mizoram",
-        "NL" => "Nagaland",
-        "OR" => "Odisha",
-        "PY" => "Puducherry",
-        "PB" => "Punjab",
-        "RJ" => "Rajasthan",
-        "SK" => "Sikkim",
-        "TN" => "Tamil Nadu",
-        "TG" => "Telangana",
-        "TR" => "Tripura",
-        "TT" => "India",
-        "UP" => "Uttar Pradesh",
-        "UT" => "Uttarakhand",
-        "WB" => "West Bengal"
-    ];
 	
 	function __construct() {
 		$this->sql = iframe\App::$db;
@@ -57,12 +17,14 @@ class Data extends DBTable {
     }
 
     function saveLatestData() {
+        global $state_codes_names;
+
         $data = $this->fetchDataFromApi();
         $save_type = 'UPDATE';
         $update_count = 0;
 
         foreach($data as $state_code => $state) {
-            $state_name = $this->state_codes_names[$state_code];
+            $state_name = $state_codes_names[$state_code];
 
             if($this->saveDetails($state_name, $state, $save_type)) $update_count++;
 
@@ -97,6 +59,8 @@ class Data extends DBTable {
         } else {
             $this->sql->update("Location", $data, ['name' => $location]);
         }
+
+        // :NOTE: Rest of the code is not perticualrly useful. We are not using the Data table anywhere. Its just gathering up data.
 
         // Remove things not in the Data table. Data table has all updates that we have fetched - Location table only has the latest data.
         $data['added_on'] = $data['updated_on'];

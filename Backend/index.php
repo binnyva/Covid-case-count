@@ -22,7 +22,10 @@ $route->post('/users/login', function(){
     global $user_model, $QUERY;
     $user = $QUERY;
     $user['name'] = $QUERY['displayName'];
-    $user_model->login($user);
+    $data = $user_model->login($user);
+
+    if($data) echo JSEND::success($data);
+    else echo JSEND::fail("Invalid Login");
 });
 
 $route->get('/users/{user_id}', function($user_id) {
@@ -34,7 +37,8 @@ $route->get('/users/{user_id}', function($user_id) {
         'uid'           => $user['uid'],
         'displayName'   => $user['name'],
         'email'         => $user['email'],
-        'subscriptions' => $user['subscriptions']
+        'subscriptions' => $user['subscriptions'],
+        'locations'     => $user['locations'],
     ];
     echo JSEND::success($return);
 });
