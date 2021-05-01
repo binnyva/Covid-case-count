@@ -4,6 +4,7 @@ require 'common.php';
 $route = new iframe\Route;
 $user_model = new User;
 $subscription_model = new Subscription;
+$location_model = new Location;
 $data_model = new Data;
 $jsend = new JSend;
 
@@ -51,10 +52,12 @@ $route->get('/users/{user_id}/subscriptions', function($user_id) {
 });
 
 $route->post('/users/{user_id}/subscriptions', function($user_id) {
-    global $subscription_model, $QUERY;
-    $subs = $subscription_model->updateSubscriptions($user_id, $QUERY['subscriptions']);
+    global $subscription_model, $location_model, $QUERY;
+    $subscription_model->updateSubscriptions($user_id, $QUERY['subscriptions']);
 
-    echo JSEND::success($subs);
+	$subs_data = $location_model->getByUser($user_id);
+
+    echo JSEND::success($subs_data);
 });
 
 $route->post('/users/{user_id}/devices', function($user_id) {

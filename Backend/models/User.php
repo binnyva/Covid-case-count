@@ -13,6 +13,11 @@ class User extends DBTable {
 	public function fetch($user_id, $fetch_subscriptions = true, $fetch_data = true) {
 		$user = $this->getByAny($user_id);
 
+		if(!$user) {
+			throw new Exception("Can't find any user by given ID($user_id).");
+            return false;
+		}
+
 		if($fetch_subscriptions) {
 			$subscription_model = new Subscription;
 			$user['subscriptions'] = $subscription_model->getByUser($user['id']);
