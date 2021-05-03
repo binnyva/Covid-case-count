@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import http from '@/http'
+
 export default {
   name: 'Home',
   data() {
@@ -43,12 +45,19 @@ export default {
     }
   },
 
+  async created() {
+    const response = await http.get(`/users/${this.$store.state.user.uid}`) // Gets the latest data from backend on every pageload.
+
+    if(response.data.status == "success") {
+      this.locations = response.data.data.locations
+    }
+  },
+
   methods: {
     formattedCount(count) {
-      return new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(count)
+      return new Intl.NumberFormat('en-IN').format(count)
     }
   }
-
 }
 </script>
 
