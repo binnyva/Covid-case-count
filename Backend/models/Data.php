@@ -11,7 +11,7 @@ class Data extends DBTable {
 	}
 
     function fetchDataFromApi() {
-        $response = load($this->data_api_url, ['cache' => false]);
+        $response = load($this->data_api_url, ['cache' => true]);
         $data = json_decode($response, true);
         return $data;
     }
@@ -54,11 +54,14 @@ class Data extends DBTable {
             "updated_on"        => isset($details['meta']['last_updated'])  ? date('Y-m-d H:i:s', strtotime($details['meta']['last_updated'])) : date('Y-m-d H:i:s')
         ];
 
+        $db_return = 0;
         if($save_type === "INSERT") {
-            $this->sql->insert("Location", $data);
+            $db_return = $this->sql->insert("Location", $data);
         } else {
-            $this->sql->update("Location", $data, ['name' => $location]);
+            $db_return = $this->sql->update("Location", $data, ['name' => $location]);
         }
+
+        return $db_return;
 
         // :NOTE: Rest of the code is not perticualrly useful. We are not using the Data table anywhere. Its just gathering up data.
 
