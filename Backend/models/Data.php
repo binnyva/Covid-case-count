@@ -11,7 +11,7 @@ class Data extends DBTable {
 	}
 
     function fetchDataFromApi() {
-        $response = load($this->data_api_url, ['cache' => true]);
+        $response = load($this->data_api_url, ['cache' => false]);
         $data = json_decode($response, true);
         return $data;
     }
