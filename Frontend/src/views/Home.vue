@@ -62,6 +62,9 @@ export default {
 </script>
 
 <style scoped>
+.delta {
+  font-size: small;
+}
 .location {
   margin-bottom: 20px;
 }

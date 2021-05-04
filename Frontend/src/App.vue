@@ -21,16 +21,6 @@
   </div>
 </template>
 
-<!--
-  <div id="nav" v-if="loggedIn">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/settings">Settings</router-link> | 
-    <router-link to="/about">About</router-link>
-  </div>
-  <div class="container">
-    <router-view/>
-  </div>
-  -->
 <script>
 export default {
   name: 'App',
