@@ -50,6 +50,9 @@ export default {
 
     if(response.data.status == "success") {
       this.locations = response.data.data.locations
+      if(!this.locations.length) {
+        this.$router.replace('settings')
+      }
     }
   },
 

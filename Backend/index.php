@@ -75,14 +75,24 @@ $route->get('/cron', function() {
     global $data_model;
 
     $updated_count = $data_model->saveLatestData();
+
+    if(date('H') == 10) {
+        $message = new Message;
+        $notification = $message->makeNotification(1); // Right now, sent message only to Binny
+      
+        $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
+        $message->send($token, "Covid Case Count", $notification);    
+    }
+    
     echo JSEND::success(['data' => "Updated $updated_count locations."]);
 });
 
 $route->get('/test', function() {
     $message = new Message;
+    $notification = $message->makeNotification(1);
+  
     $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
-
-    $message->send($token, "Hello", "World");
+    $message->send($token, "Covid Case Count", $notification);
 });
 $route->handle();
 
