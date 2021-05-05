@@ -2,6 +2,7 @@
   "name": "binnyva/iframe-skeleton",
   "description": "Skeleton App for iFrame PHP micro framework",
   "require": {
-    "binnyva/iframe": "^2.0"
+    "binnyva/iframe": "^2.0",
+    "kreait/firebase-php": "^5.18"
   }
 }
