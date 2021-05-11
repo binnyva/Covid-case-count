@@ -1,12 +1,6 @@
 <template>
   <div>
-    <!--
-    <input type="email" name="email" v-model="email" placeholder="Email" class="form-control" /><br />
-    <input type="password" name="password" v-model="password" class="form-control" /><br />
-    <input type="submit" name="action" class="btn btn-primary" value="Login" />
-
-    <p>OR</p>
-    -->
+    <p>Please sign in to use the app...</p>
     <input type="button" class="btn btn-primary" name="google-signin" value="Sign in with Google" @click="googleSignIn" /><br />
   </div>
 </template>
@@ -28,9 +22,8 @@
           .then((result) => {
             http.post('/users/login', result.user).then((res) => {
               this.$store.dispatch("setUser", res.data.data)
+              this.$router.replace('home')
             })
-
-            this.$router.replace('home')
           })
           .catch((err) => {
             console.log(err); // This will give you all the information needed to further debug any errors

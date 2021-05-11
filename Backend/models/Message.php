@@ -22,7 +22,7 @@ class Message {
 		]);
 
 		$response = $this->messaging->send($message);
-		return $response;
+		return ['response' => $response, 'message' => $message];
 	}
 
 	public function makeNotification($user_id) {
@@ -73,7 +73,7 @@ class Message {
 			// 0.9k-850k
 			$n_format = number_format($n / 1000, $precision);
 			$suffix = 'K';
-		} else if ($n < 90000000) {
+		} else if ($n < 9000000) {
 			// 0.9l-850l
 			$n_format = number_format($n / 100000, $precision);
 			$suffix = 'L';

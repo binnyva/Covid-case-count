@@ -7,7 +7,7 @@ import Home from '../views/Home.vue'
 import Settings from '../views/Settings.vue'
 import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
-import Subscriptions from "../views/Subscriptions.vue"
+import About from '../views/About.vue'
 
 const routes = [
   {
@@ -32,14 +32,6 @@ const routes = [
     }
   },
   {
-    path: '/subscriptions',
-    name: 'Subscriptions',
-    component: Subscriptions,
-    meta: {
-      requiresAuth: true
-    }
-  },
-  {
     path: '/login',
     name: 'Login',
     component: Login
@@ -52,6 +44,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
+    component: About
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.

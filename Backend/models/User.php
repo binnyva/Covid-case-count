@@ -90,8 +90,20 @@ class User extends DBTable {
 		}
 	}
 
+	public function removeDevice($u_id, $token)
+	{
+		list($user_id, $uid) = $this->getBothIds($u_id);
+
+		$existing_device = $this->deviceExists($user_id, $token);
+		if($existing_device) {
+			$this->sql->update("Device", ['status' => '0'], ['user_id' => $user_id, 'token' => $token]);
+		}
+
+		return true;
+	}
+
 	public function deviceExists($user_id, $token) {
-		return $this->sql->getOne("SELECT id FROM Device WHERE user_id=$user_id AND token='$token'");
+		return $this->sql->getOne("SELECT id FROM Device WHERE user_id=$user_id AND token='$token' AND status='1'");
 	}
 
 }

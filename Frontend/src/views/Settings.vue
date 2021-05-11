@@ -42,6 +42,9 @@
 
         <input v-if="app_init && subscriptions.length > 0" type="button" class="btn btn-success" value="Save Subscriptions" @click="saveSubscriptions" />
         <input v-if="!app_init && subscriptions.length > 0" type="button" class="btn btn-success" value="Save and Move to Next Step &gt;" @click="saveSubscriptions" />
+
+        <br /><br />
+        <p><input type="button" class="btn btn-danger" value="Logout" @click="logout" /></p>
       </div>
 
       <!-- <div class="container" id="settings" v-if="step === 2">
@@ -171,6 +174,10 @@ export default {
 
     unsubscribe() { // :TODO:
 
+    },
+
+    logout() {
+      this.$router.replace('logout')
     },
 
     async saveSubscriptions() {

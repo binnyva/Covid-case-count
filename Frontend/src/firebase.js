@@ -20,6 +20,7 @@ const requestPermission = async () => {
   const currentToken = await messaging.getToken({ vapidKey: firebase_web_push_key });
 
   if (currentToken) {
+    store.dispatch("setToken", currentToken)
     const res = await http.post(`/users/${store.state.user.uid}/devices`, {
       token: currentToken
     });

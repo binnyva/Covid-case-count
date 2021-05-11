@@ -5,6 +5,7 @@ const store = createStore({
   state: {
     loggedIn: false,
     user: null,
+    token: null,
     subscriptions: [],
     locations: []
   },
@@ -16,6 +17,9 @@ const store = createStore({
     },
     user(state){
       return state.user
+    },
+    token(state) {
+      return state.token
     },
     subscriptions(state) {
       return state.subscriptions
@@ -37,6 +41,9 @@ const store = createStore({
     },
     SET_LOCATIONS(state, locs) {
       state.locations = locs
+    },
+    SET_TOKEN(state, token) {
+      state.token = token
     }
   },
 
@@ -57,10 +64,12 @@ const store = createStore({
         commit("SET_USER", null);
         commit("SET_SUBSCRIPTIONS", [])
         commit("SET_LOCATIONS", [])
+        commit("SET_TOKEN", null)
       }
     },
 
     setUser({ commit }, user) {
+      commit("SET_LOGGED_IN", user !== null);
       commit("SET_USER", {
         displayName: user.displayName,
         email: user.email,
@@ -70,6 +79,10 @@ const store = createStore({
 
       commit("SET_SUBSCRIPTIONS", user.subscriptions)
       commit("SET_LOCATIONS", user.locations)
+    },
+
+    setToken({ commit }, token) {
+      commit("SET_TOKEN", token )
     },
 
     setSubscriptions({ commit }, subs) {

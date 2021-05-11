@@ -1,8 +1,8 @@
 {
   "name": "Covid Case Count",
   "short_name": "CCC",
-  "theme_color": "#fff",
-  "background_color": "#f69435",
+  "theme_color": "#343a40",
+  "background_color": "#fff",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/ccc/",
