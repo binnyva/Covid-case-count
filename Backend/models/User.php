@@ -96,7 +96,7 @@ class User extends DBTable {
 
 		$existing_device = $this->deviceExists($user_id, $token);
 		if($existing_device) {
-			$this->sql->update("Device", ['status' => '0'], ['user_id' => $user_id, 'token' => $token]);
+			$this->sql->update("Device", ['status' => '0', 'updated_on' => 'NOW()'], ['user_id' => $user_id, 'token' => $token]);
 		}
 
 		return true;

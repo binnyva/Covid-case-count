@@ -85,7 +85,9 @@ $route->get('/cron', function() {
 
     $updated_count = $data_model->saveLatestData();
 
-    if(date('H') == 10) {
+    if(date('H') == "10" or date('H') == "11") {
+        // :TODO:
+        // Find all people with valid devices registered, put them in a for loop, send message to all.
         $message = new Message;
         $notification = $message->makeNotification(1); // Right now, sent message only to Binny
       
@@ -93,13 +95,13 @@ $route->get('/cron', function() {
         $message->send($token, "Covid Case Count", $notification);    
     }
     
-    echo JSEND::success(['data' => "Updated $updated_count locations."]);
+    echo JSEND::success(['data' => "Updated $updated_count locations. Hour: " . date('H')]);
 });
 
 $route->get('/test', function() {
     $message = new Message;
     $notification = $message->makeNotification(1);
-  
+
     $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
     // $token = 'dU1R6jC_WdTRRAphkMDEh0:APA91bFNH64LNWswZy5kaSjE3mFDsfwrTrp0EkpZYgJpyYzBgq8lT415IntHeOfDL3G3_yVLd9g8VNFhO1isobTItb6A5iHNYhR05QKzed7uGhBgBLJ0nAF4HNRWRHgfqkeCJ-xiUECR';
     $response = $message->send($token, "Covid Case Count", $notification);
@@ -107,10 +109,3 @@ $route->get('/test', function() {
     echo JSEND::success($response);
 });
 $route->handle();
-
-/*
-
-	users/{user_id}/locations
-	users/login
-	users/register
-*/
