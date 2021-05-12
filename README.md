@@ -1,13 +1,14 @@
-
 # Covid Case Count
 
 Covid Case Count(CCC) is a progressive web app that will push the covid case counts of the places you have subscribed to as notifications to your phone.
 
-
+You can use the app by going to [Covid Case Count](https://apps.binnyva.com/ccc/) website. Login using your Google account and subcribed to the places you want informaiton about.
 
 ## Installation 
 
-This repository has both the frontend(Vue 3, NPM) and the backend(PHP, Composer). They'll have to be installed seprerately.
+The app can be used without manually installing it - just go to the [CCC Website](https://apps.binnyva.com/ccc/). Install it only if you wish to study or modify it. 
+
+This repository has both the frontend(Vue 3, NPM) and the backend(PHP, [iFrame](https://github.com/binnyva/iframe), Composer). They'll have to be installed seprerately.
 
 ### Frontend
 

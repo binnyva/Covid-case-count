@@ -85,14 +85,19 @@ $route->get('/cron', function() {
 
     $updated_count = $data_model->saveLatestData();
 
-    if(date('H') == "10" or date('H') == "11") {
-        // :TODO:
+    if(date('H') == "10") { // Send the notifications at 10 AM
         // Find all people with valid devices registered, put them in a for loop, send message to all.
-        $message = new Message;
-        $notification = $message->makeNotification(1); // Right now, sent message only to Binny
-      
-        $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
-        $message->send($token, "Covid Case Count", $notification);    
+        $device_model = new Device;
+        $subscribed_users = $device_model->getAll();
+
+        foreach($subscribed_users as $usr) {
+            $message = new Message;
+            $notification = $message->makeNotification($usr['user_id']);
+        
+            // Test Token - Binny, Mobile: $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
+            // dump($usr, $notification);
+            $message->send($usr['token'], "Covid Case Count", $notification);
+        }
     }
     
     echo JSEND::success(['data' => "Updated $updated_count locations. Hour: " . date('H')]);

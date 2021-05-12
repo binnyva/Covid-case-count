@@ -73,6 +73,7 @@ class User extends DBTable {
 		]);
 	}
 
+	// :TODO: Shouldn't these bin in Device Model?
 	public function addDevice($u_id, $token) {
 		list($user_id, $uid) = $this->getBothIds($u_id);
 
@@ -86,7 +87,11 @@ class User extends DBTable {
 				'status'	=> '1',
 			]);
 		} else {
-			return $existing_device;
+			if(!$existing_device['status']) {
+				$this->sql->update("Device", ['status' => '1'], ['id' => $existing_device['id']]);
+			}
+
+			return $existing_device['id'];
 		}
 	}
 
@@ -95,7 +100,7 @@ class User extends DBTable {
 		list($user_id, $uid) = $this->getBothIds($u_id);
 
 		$existing_device = $this->deviceExists($user_id, $token);
-		if($existing_device) {
+		if($existing_device and $existing_device['status']) {
 			$this->sql->update("Device", ['status' => '0', 'updated_on' => 'NOW()'], ['user_id' => $user_id, 'token' => $token]);
 		}
 
@@ -103,7 +108,7 @@ class User extends DBTable {
 	}
 
 	public function deviceExists($user_id, $token) {
-		return $this->sql->getOne("SELECT id FROM Device WHERE user_id=$user_id AND token='$token' AND status='1'");
+		return $this->sql->getOne("SELECT id,status FROM Device WHERE user_id=$user_id AND token='$token'");
 	}
 
 }
