@@ -103,7 +103,7 @@ $route->get('/cron', function() {
     echo JSEND::success(['data' => "Updated $updated_count locations. Hour: " . date('H')]);
 });
 
-$route-get('/notify/{user_id}', function($user_id) {
+$route->get('/notify/{user_id}', function($user_id) {
     $device_model = new Device;
     if(!$user_id) {
         $subscribed_users = $device_model->getAll();
@@ -119,15 +119,19 @@ $route-get('/notify/{user_id}', function($user_id) {
         }
     }
 
+    $return = [];
+
     foreach($subscribed_users as $usr) {
         $message = new Message;
         $notification = $message->makeNotification($usr['user_id']);
     
         // Test Token - Binny, Mobile: $token = 'eTC_RaltDn5FDnUnLtH8im:APA91bGE_X1vMHfW8aW78y8Jw-5o0WMLGN-1a6NUHb2sQhBKSehRWImXs8-TeasiSF3O7RGh2BvC0c8ATlf0XvsdsDXf0BjeV5bLpoNklDE4oJsoqDHncXsnK3yhk31YGysw60oDbDSe';
         // dump($usr, $notification);
-        $message->send($usr['token'], "Covid Case Count", $notification);
+        $return[] = $message->send($usr['token'], "Covid Case Count", $notification);
     }
-})
+
+    echo JSEND::success(['data' => $return]);
+});
 
 $route->get('/test', function() {
     $message = new Message;
