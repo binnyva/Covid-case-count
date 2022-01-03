@@ -19,11 +19,29 @@ This repository has both the frontend(Vue 3, NPM) and the backend(PHP, [iFrame](
     
 ### Backend / API
 
-``` bash
+```bash
 cd ../Backend
 composer install
+
 ```
+
+## Development
+
+Run a development server using this command
+
+```bash
+npm run serve
+```
+
+Then visit [http://localhost:8080/covid-case-count/](http://localhost:8080/covid-case-count/) . Note the `covid-case-count` directory in the URL. It will NOT work without that part.
 
 ## Deployment
 
 This repository has both the frontend(Vue 3, NPM) and the backend(PHP, Composer). You'll have to deploy it seprerately.
+
+### Frontend
+
+```bash
+npm run build
+```
+

@@ -3,7 +3,9 @@ use iframe\DB\DBTable;
 
 class Data extends DBTable {
 	private $sql;
-    private $data_api_url = "https://api.covid19india.org/v4/min/data.min.json";
+    // private $data_api_url = "https://api.covid19india.org/v4/min/data.min.json"; // Old/Original site
+    // private $data_api_url = "https://data.incovid19.org/v4/min/data.min.json"; // InCovid19.org
+    private $data_api_url = "https://data.covid19bharat.org/v4/min/data.min.json";
 	
 	function __construct() {
 		$this->sql = iframe\App::$db;

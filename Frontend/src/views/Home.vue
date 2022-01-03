@@ -1,6 +1,8 @@
 <template>
   <div class="home">
     <div id="display-area">
+      <p>Update: This app is currently <strong>inactive</strong>(as of 2021 November). The source of the data for this app is <a href="https://covid19india.org">Covid19India</a> - and they have <a href="https://blog.covid19india.org/2021/08/07/end/">shut down opererations</a>. CCC will be available once I find another data source. Sorry about the inconvenience.</p>
+      
       <div class="location" v-for="(loc, key) in locations" :key="key">
         <h4>{{ loc.name }}</h4>
         <div class="details">
